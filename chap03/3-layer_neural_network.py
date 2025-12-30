@@ -1,7 +1,7 @@
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), os.pardir))
 import numpy as np
-from common.func import sigmoid, identity_function
+from common.funcs import sigmoid, identity_function
 
 def _init_network():
     network = {}
