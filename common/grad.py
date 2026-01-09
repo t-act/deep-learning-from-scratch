@@ -16,10 +16,10 @@ def numerical_gradient(f, x) -> np.array:
         tmp_val = x[idx]
 
         x[idx] = tmp_val + h
-        fxh1 = f(x) + h # f(x+h)
+        fxh1 = f(x) # f(x+h)
 
         x[idx] = tmp_val - h
-        fxh2 = f(x) - h  # f(x-h)
+        fxh2 = f(x)  # f(x-h)
 
         grad[idx] = (fxh1 - fxh2) / (2*h) # 中心差分法
 

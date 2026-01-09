@@ -1,4 +1,7 @@
 import numpy as np
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), os.pardir))
+from common.funcs import *
 
 class Relu:
     def __init__(self):
@@ -60,4 +63,24 @@ class Affine:
         self.db = np.sum(dout, axis=0)
         
         dx = dx.reshape(*self.original_x_shape)  # 入力データの形状に戻す（テンソル対応）
+        return dx
+    
+class SoftmaxWithLoss:
+    def __init__(self):
+        self.loss = None # 損失
+        self.y = None    # softmaxの出力
+        self.t = None    # 教師データ(one-hot vector)
+
+    def forward(self, x, t):
+        self.t = t
+        # use batched softmax implementation (handles 2D input / batches)
+        self.y = softmax(x)
+        self.loss = cross_entropy_error(self.y, self.t)
+
+        return self.loss
+    
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) / batch_size
+
         return dx
